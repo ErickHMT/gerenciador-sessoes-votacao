@@ -43,4 +43,11 @@ public class SessaoController {
         return ResponseEntity.created(uri).body(new SessaoDto(sessao));
     }
     
+    @PostMapping(value = "/pauta/{pautaId}/duracao/{duracao}")
+    public ResponseEntity<?> criarSessao(@PathVariable Long pautaId, @PathVariable Long duracao, UriComponentsBuilder uriBuilder){
+        Sessao sessao = sessaoService.abrirSessaoComDuracao(pautaId, duracao);
+        URI uri = uriBuilder.path("/sessao/pauta/{pautaId}").buildAndExpand(pautaId).toUri();
+        return ResponseEntity.created(uri).body(new SessaoDto(sessao));
+    }
+    
 }
