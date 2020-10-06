@@ -19,8 +19,6 @@ import com.gerenciadorsessoesvotacao.service.SessaoService;
 
 import javassist.NotFoundException;
 
-// ● Abrir uma sessão de votação em uma pauta (a sessão de votação deve 
-// ficar aberta por um tempo determinado na chamada de abertura ou 1 minuto por default)
 @RestController
 @RequestMapping(value = "/sessao") 
 public class SessaoController {
