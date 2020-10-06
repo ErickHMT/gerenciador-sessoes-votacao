@@ -27,7 +27,7 @@ public class VotoSessaoController {
 	VotoSessaoService votoSessaoService;
 	
     @PostMapping(value = "/sessao/{sessaoId}")
-    public ResponseEntity<?> criarSessao(@PathVariable Long sessaoId, @RequestBody VotoSessao votoSessao, UriComponentsBuilder uriBuilder) throws NotFoundException {
+    public ResponseEntity<?> registrarVoto(@PathVariable Long sessaoId, @RequestBody VotoSessao votoSessao, UriComponentsBuilder uriBuilder) throws NotFoundException {
     	
     	try {
 	        VotoSessao voto = votoSessaoService.registrarVoto(votoSessao, sessaoId);
