@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.gerenciadorsessoesvotacao.controller.dto.ResultadoSessaoDto;
+import com.gerenciadorsessoesvotacao.core.GenericException;
 import com.gerenciadorsessoesvotacao.entity.Sessao;
 import com.gerenciadorsessoesvotacao.entity.enums.ResultadoSessaoEnum;
 import com.gerenciadorsessoesvotacao.entity.enums.VotoEnum;
@@ -63,6 +64,12 @@ public class SessaoService {
 	 */
 	private Sessao novaSessao(Long pautaId, Long duracao) {
 		var pauta = pautaService.getById(pautaId);
+		
+		List<Sessao> sessoesDaPauta = sessaoRepository.getSessoesByPautaId(pautaId);
+		if(sessoesDaPauta.size() >= 1) {
+			throw new GenericException("Já existe uma sessão para a pauta em questão!");
+		}
+		
 		var inicioSessao = LocalDateTime.now();
 		var fimSessao = inicioSessao.plusMinutes(duracao);
 		
