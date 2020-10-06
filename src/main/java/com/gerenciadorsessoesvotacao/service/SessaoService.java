@@ -1,6 +1,8 @@
 package com.gerenciadorsessoesvotacao.service;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -96,8 +98,14 @@ public class SessaoService {
 		
 		if(sessao.isPresent()) {
 			ResultadoSessaoDto resultado = new ResultadoSessaoDto(sessao.get());	
-			var votos = resultado.getVotos();
-			
+
+			var fimSessao = resultado.getFimSessao();
+			if(LocalDateTime.now().isBefore(fimSessao)) {
+				var fimSessaoFormatado = fimSessao.toLocalTime().format(DateTimeFormatter.ofPattern("HH:mm"));
+				throw new GenericException("Aguarde o fim da sessão para a consulta do resultado! Horário de encerramento: " + fimSessaoFormatado);
+			}
+
+			var votos = resultado.getVotos();			
 			int qtdSim = votos.stream().filter(voto -> voto.getVoto() == VotoEnum.SIM).collect(Collectors.toList()).size();
 			int qtdNao = votos.stream().filter(voto -> voto.getVoto() == VotoEnum.NAO).collect(Collectors.toList()).size();
 			
