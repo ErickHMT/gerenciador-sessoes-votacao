@@ -22,8 +22,7 @@ public class Pauta {
     @NotNull
     private String conteudo;
     
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "PK_SESSAO_SEQ", referencedColumnName = "id")
+    @OneToOne(mappedBy = "pauta")
     private Sessao sessao;
 
 	public Long getId() {

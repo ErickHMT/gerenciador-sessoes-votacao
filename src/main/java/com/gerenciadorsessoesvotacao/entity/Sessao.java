@@ -3,10 +3,12 @@ package com.gerenciadorsessoesvotacao.entity;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.SequenceGenerator;
@@ -30,7 +32,8 @@ public class Sessao {
     @OneToMany(mappedBy = "sessao")
     private List<VotoSessao> votos;
     
-    @OneToOne(mappedBy = "sessao")
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_pauta", referencedColumnName = "id")
     private Pauta pauta;
 
 	public Long getId() {
