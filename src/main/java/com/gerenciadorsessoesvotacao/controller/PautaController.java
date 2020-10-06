@@ -17,6 +17,8 @@ import com.gerenciadorsessoesvotacao.controller.dto.PautaDto;
 import com.gerenciadorsessoesvotacao.entity.Pauta;
 import com.gerenciadorsessoesvotacao.service.PautaService;
 
+import io.swagger.annotations.ApiOperation;
+
 @RestController
 @RequestMapping(value = "/pauta")
 public class PautaController {
@@ -24,6 +26,7 @@ public class PautaController {
 	@Autowired
 	PautaService pautaService;
 
+	@ApiOperation(value = "Retorna uma pauta de acordo com o id informado")
 	@GetMapping("/{pautaId}")
 	public ResponseEntity<?> getById(@PathVariable Long pautaId) {
 		Optional<Pauta> pauta = pautaService.getById(pautaId);
@@ -35,6 +38,7 @@ public class PautaController {
 		}
 	}
 
+	@ApiOperation(value = "Cria uma pauta")
     @PostMapping
     public ResponseEntity<?> salvar(@RequestBody Pauta pauta, UriComponentsBuilder uriBuilder){
     	Pauta novaPauta = pautaService.save(pauta);

@@ -17,6 +17,7 @@ import com.gerenciadorsessoesvotacao.controller.dto.SessaoDto;
 import com.gerenciadorsessoesvotacao.entity.Sessao;
 import com.gerenciadorsessoesvotacao.service.SessaoService;
 
+import io.swagger.annotations.ApiOperation;
 import javassist.NotFoundException;
 
 @RestController
@@ -26,6 +27,7 @@ public class SessaoController {
 	@Autowired
 	SessaoService sessaoService;
 	
+	@ApiOperation(value = "Busca uma Sessão de acordo com o id informado")
 	@GetMapping("/{sessaoId}")
 	public ResponseEntity<?> getById(@PathVariable Long sessaoId) {
 		Optional<Sessao> sessao = sessaoService.getById(sessaoId);
@@ -37,12 +39,14 @@ public class SessaoController {
 		}
 	}
 	
+	@ApiOperation(value = "Busca o resultado uma Sessão de votações")
 	@GetMapping("/{sessaoId}/resultado")
 	public ResponseEntity<?> getResultadoSessao(@PathVariable Long sessaoId) throws NotFoundException {
 		ResultadoSessaoDto resultadoSessao = sessaoService.getResultadoSessao(sessaoId);
 		return ResponseEntity.ok(resultadoSessao);						
 	}
 	
+	@ApiOperation(value = "Cria uma Sessão de votações para a pauta informada com duração padrão")
     @PostMapping(value = "/pauta/{pautaId}")
     public ResponseEntity<?> criarSessao(@PathVariable Long pautaId, UriComponentsBuilder uriBuilder){
         Sessao sessao = sessaoService.abrirSessao(pautaId);
@@ -50,6 +54,7 @@ public class SessaoController {
         return ResponseEntity.created(uri).body(new SessaoDto(sessao));
     }
     
+	@ApiOperation(value = "Cria uma Sessão de votações para a pauta informada com duração informada (em minutos)")
     @PostMapping(value = "/pauta/{pautaId}/duracao/{duracao}")
     public ResponseEntity<?> criarSessao(@PathVariable Long pautaId, @PathVariable Long duracao, UriComponentsBuilder uriBuilder){
         Sessao sessao = sessaoService.abrirSessaoComDuracao(pautaId, duracao);

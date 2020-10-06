@@ -17,6 +17,7 @@ import com.gerenciadorsessoesvotacao.core.VotoSessaoException;
 import com.gerenciadorsessoesvotacao.entity.VotoSessao;
 import com.gerenciadorsessoesvotacao.service.VotoSessaoService;
 
+import io.swagger.annotations.ApiOperation;
 import javassist.NotFoundException;
 
 @RestController
@@ -26,6 +27,7 @@ public class VotoSessaoController {
 	@Autowired
 	VotoSessaoService votoSessaoService;
 	
+	@ApiOperation(value = "Registra o voto de um associado em uma sessão")
     @PostMapping(value = "/sessao/{sessaoId}")
     public ResponseEntity<?> registrarVoto(@PathVariable Long sessaoId, @RequestBody VotoSessao votoSessao, UriComponentsBuilder uriBuilder) throws NotFoundException {
     	
