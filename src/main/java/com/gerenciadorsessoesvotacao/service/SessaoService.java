@@ -2,12 +2,18 @@ package com.gerenciadorsessoesvotacao.service;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.gerenciadorsessoesvotacao.controller.dto.ResultadoSessaoDto;
 import com.gerenciadorsessoesvotacao.entity.Sessao;
+import com.gerenciadorsessoesvotacao.entity.enums.ResultadoSessaoEnum;
+import com.gerenciadorsessoesvotacao.entity.enums.VotoEnum;
 import com.gerenciadorsessoesvotacao.repository.SessaoRepository;
+
+import javassist.NotFoundException;
 
 @Service
 public class SessaoService {
@@ -69,6 +75,41 @@ public class SessaoService {
 		}
 		
 		return sessaoRepository.save(sessao);
+	}
+	
+	/**
+	 * Contabiliza os votos e retorna o resultado da sessão de votação
+	 * 
+	 * @param sessaoId
+	 * @return
+	 * @throws NotFoundException 
+	 */
+	public ResultadoSessaoDto getResultadoSessao(Long sessaoId) throws NotFoundException {
+		Optional<Sessao> sessao = getById(sessaoId);
+		
+		if(sessao.isPresent()) {
+			ResultadoSessaoDto resultado = new ResultadoSessaoDto(sessao.get());	
+			var votos = resultado.getVotos();
+			
+			int qtdSim = votos.stream().filter(voto -> voto.getVoto() == VotoEnum.SIM).collect(Collectors.toList()).size();
+			int qtdNao = votos.stream().filter(voto -> voto.getVoto() == VotoEnum.NAO).collect(Collectors.toList()).size();
+			
+			resultado.setQuantidadeSim(qtdSim);
+			resultado.setQuantidadeNao(qtdNao);;
+			
+			if(qtdSim > qtdNao) {
+				resultado.setResultado(ResultadoSessaoEnum.APROVADA);
+			} else if(qtdSim < qtdNao) {
+				resultado.setResultado(ResultadoSessaoEnum.REPROVADA);
+			} else {
+				resultado.setResultado(ResultadoSessaoEnum.EMPATE);
+			}
+			
+			
+			return resultado;
+		}
+		
+		throw new NotFoundException("Não foi encontrado um resultado para a sessão informada!!");
 	}
 	
 }

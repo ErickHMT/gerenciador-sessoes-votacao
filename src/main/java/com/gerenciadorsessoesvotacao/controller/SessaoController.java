@@ -12,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import com.gerenciadorsessoesvotacao.controller.dto.ResultadoSessaoDto;
 import com.gerenciadorsessoesvotacao.controller.dto.SessaoDto;
 import com.gerenciadorsessoesvotacao.entity.Sessao;
 import com.gerenciadorsessoesvotacao.service.SessaoService;
+
+import javassist.NotFoundException;
 
 // ● Abrir uma sessão de votação em uma pauta (a sessão de votação deve 
 // ficar aberta por um tempo determinado na chamada de abertura ou 1 minuto por default)
@@ -34,6 +37,12 @@ public class SessaoController {
 		} else {
 			return ResponseEntity.noContent().build();
 		}
+	}
+	
+	@GetMapping("/{sessaoId}/resultado")
+	public ResponseEntity<?> getResultadoSessao(@PathVariable Long sessaoId) throws NotFoundException {
+		ResultadoSessaoDto resultadoSessao = sessaoService.getResultadoSessao(sessaoId);
+		return ResponseEntity.ok(resultadoSessao);						
 	}
 	
     @PostMapping(value = "/pauta/{pautaId}")
