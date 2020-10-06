@@ -14,7 +14,7 @@ public interface VotoSessaoRepository extends JpaRepository<VotoSessao, Long> {
 
 	List<VotoSessao> getVotoSessaosBySessaoId(Long id);
 	
-    @Query(value="SELECT * FROM VOTO_SESSAO v WHERE v.id_responsavel = :associadoId AND v.sessao_id = :sessaoId", nativeQuery = true)
+    @Query(value="SELECT * FROM VOTO_SESSAO v WHERE v.id_associado = :associadoId AND v.sessao_id = :sessaoId", nativeQuery = true)
     List<VotoSessao> getVotosByAssociado(@Param("associadoId") Long idAssociado, @Param("sessaoId") Long sessaoId);
 	
 }

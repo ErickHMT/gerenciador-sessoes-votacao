@@ -11,12 +11,12 @@ public class VotoSessaoDto {
 
     private Long id;
     private VotoEnum voto;
-    private Long idResponsavel;
+    private Long idAssociado;
     
     public VotoSessaoDto(VotoSessao votoSessao) {
         this.id = votoSessao.getId();
         this.voto = votoSessao.getVoto();
-        this.idResponsavel = votoSessao.getIdResponsavel();
+        this.idAssociado = votoSessao.getIdAssociado();
     }
     
     public static List<VotoSessaoDto> from(List<VotoSessao> votos) {
@@ -45,12 +45,12 @@ public class VotoSessaoDto {
 		this.voto = voto;
 	}
 
-	public Long getIdResponsavel() {
-		return idResponsavel;
+	public Long getIdAssociado() {
+		return idAssociado;
 	}
 
-	public void setIdResponsavel(Long idResponsavel) {
-		this.idResponsavel = idResponsavel;
+	public void setIdAssociado(Long idAssociado) {
+		this.idAssociado = idAssociado;
 	}
 	
 }

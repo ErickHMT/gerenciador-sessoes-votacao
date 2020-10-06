@@ -22,7 +22,7 @@ public class VotoSessao {
     private VotoEnum voto;
     
     @NotNull
-    private Long idResponsavel;
+    private Long idAssociado;
     
     @NotNull
     @ManyToOne
@@ -44,12 +44,12 @@ public class VotoSessao {
 		this.voto = voto;
 	}
 
-	public Long getIdResponsavel() {
-		return idResponsavel;
+	public Long getIdAssociado() {
+		return idAssociado;
 	}
 
-	public void setIdResponsavel(Long idResponsavel) {
-		this.idResponsavel = idResponsavel;
+	public void setIdAssociado(Long idAssociado) {
+		this.idAssociado = idAssociado;
 	}
 
 	public Sessao getSessao() {

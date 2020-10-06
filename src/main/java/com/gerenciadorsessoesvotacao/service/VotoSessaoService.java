@@ -42,7 +42,7 @@ public class VotoSessaoService {
 	 * @throws NotFoundException 
 	 */
 	public VotoSessao registrarVoto(VotoSessao votoSessao, Long sessaoId) throws VotoSessaoException, NotFoundException {		
-		Long idAssociado = votoSessao.getIdResponsavel();
+		Long idAssociado = votoSessao.getIdAssociado();
 		Optional<Sessao> sessaoOpt = sessaoService.getById(sessaoId);
 		
 		if(sessaoOpt.isPresent()) {
